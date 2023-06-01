@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9050655577294351227}
   - component: {fileID: 3037231030558318777}
   - component: {fileID: 7752457949012066068}
-  - component: {fileID: 3672476188150350445}
   m_Layer: 0
   m_Name: Pupil
   m_TagString: Untagged
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3672476188150350445
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 23902861047715223}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4690820415314797228
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +94,6 @@ GameObject:
   - component: {fileID: 4690820415314797229}
   - component: {fileID: 4690820415314797216}
   - component: {fileID: 4690820415314797219}
-  - component: {fileID: 4690820415314797218}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -182,19 +167,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4690820415314797218
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4690820415314797228}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4690820415853168725
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,8 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4690820415853168745}
   - component: {fileID: 4690820415853168744}
-  - component: {fileID: 4690820415853168747}
-  - component: {fileID: 4690820415853168746}
+  - component: {fileID: 7820163138408966189}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -251,63 +222,30 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: b514a7c01d4df4acdbe724180ced7274
   NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 4690820415853168746}
+  NetworkedBehaviours: []
   SimulationBehaviours: []
---- !u!143 &4690820415853168747
-CharacterController:
+--- !u!195 &7820163138408966189
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4690820415853168725}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
+  m_AgentTypeID: 0
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4690820415853168746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4690820415853168725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 4690820416644826454}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
-  gravity: -20
-  jumpImpulse: 8
-  acceleration: 10
-  braking: 10
-  maxSpeed: 2
-  rotationSpeed: 15
-  _IsGrounded: 0
-  _Velocity: {x: 0, y: 0, z: 0}
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &4690820416201564344
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +257,6 @@ GameObject:
   - component: {fileID: 4690820416201564345}
   - component: {fileID: 4690820416201564348}
   - component: {fileID: 4690820416201564351}
-  - component: {fileID: 4690820416201564350}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -393,20 +330,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4690820416201564350
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4690820416201564344}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4690820416644826449
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4690820416644826449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

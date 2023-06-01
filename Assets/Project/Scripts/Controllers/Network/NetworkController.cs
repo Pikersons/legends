@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Project.Scripts.Controllers;
 using Fusion;
 using Fusion.Sockets;
 using Legends.Managers;
@@ -10,11 +11,14 @@ namespace Legends.Controllers
 {
     public class NetworkController : MonoBehaviour, INetworkRunnerCallbacks
     {
-        [Header("Network")]
+        [Space]
         [SerializeField] private NetworkRunner _runner;
         [SerializeField] private NetworkSceneManagerDefault _networkSceneManager;
-        [Header("Managers")]
+        [Space]
         [SerializeField] private InputManager _inputManager;
+        [Space]
+        [SerializeField] private NetworkPrefabRef _movementController;
+        [SerializeField] private NetworkPrefabRef _prefab;
 
         public void OnConnectedToServer(NetworkRunner runner)
         { }
@@ -43,7 +47,15 @@ namespace Legends.Controllers
         { }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-        { }
+        {
+            if (runner.IsServer)
+            {
+                NetworkObject characterObject = runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
+                NetworkObject movementControllerObject = runner.Spawn(_movementController, inputAuthority: player);
+                CharacterMovementController movementController = movementControllerObject.GetComponent<CharacterMovementController>();
+                movementController.SetCharacter1(characterObject);
+            }
+        }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         { }
