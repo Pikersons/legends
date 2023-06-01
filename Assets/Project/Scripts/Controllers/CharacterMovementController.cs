@@ -17,7 +17,7 @@ namespace Assets.Project.Scripts.Controllers
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
-            if (GetInput(out InputData inputData))
+            if (Runner.IsServer && GetInput(out InputData inputData))
             {
                 _character1.destination = inputData.Destination;
             }
