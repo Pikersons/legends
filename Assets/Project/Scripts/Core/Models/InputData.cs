@@ -1,7 +1,7 @@
 ﻿using Fusion;
 using UnityEngine;
 
-namespace Assets.Project.Scripts.Core.Models
+namespace Legends.Core.Models
 {
     public readonly struct InputData : INetworkInput
     {

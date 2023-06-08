@@ -1,5 +1,6 @@
-﻿using Assets.Project.Scripts.Core.Models;
-using Fusion;
+﻿using Fusion;
+using Legends.Core.Models;
+using Legends.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,11 @@ namespace Assets.Project.Scripts.Controllers
         public void SetCharacter1(NetworkObject character)
         {
             _character1 = character.GetComponent<NavMeshAgent>();
+        }
+
+        public override void Spawned()
+        {
+            GameManager.Instance.SetCharacterMovementController(this);
         }
 
         public override void FixedUpdateNetwork()

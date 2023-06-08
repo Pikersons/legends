@@ -1,5 +1,5 @@
-using Assets.Project.Scripts.Core.Models;
 using Fusion;
+using Legends.Core.Models;
 using UnityEngine;
 
 namespace Legends.Managers

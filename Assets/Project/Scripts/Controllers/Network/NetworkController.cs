@@ -52,8 +52,8 @@ namespace Legends.Controllers
             {
                 NetworkObject characterObject = runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
                 NetworkObject movementControllerObject = runner.Spawn(_movementController, inputAuthority: player);
-                CharacterMovementController movementController = movementControllerObject.GetComponent<CharacterMovementController>();
-                movementController.SetCharacter1(characterObject);
+                //CharacterMovementController movementController = movementControllerObject.GetComponent<CharacterMovementController>();
+                //movementController.SetCharacter1(characterObject);
             }
         }
 
