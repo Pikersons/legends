@@ -17,13 +17,15 @@ namespace Assets.Project.Scripts.Controllers
 
         public override void Spawned()
         {
-            GameManager.Instance.SetCharacterMovementController(this);
+            if (HasInputAuthority)
+            {
+                GameManager.Instance.SetCharacterMovementController(this);
+            }
         }
 
         public override void FixedUpdateNetwork()
         {
-            base.FixedUpdateNetwork();
-            if (Runner.IsServer && GetInput(out InputData inputData))
+            if (_character1 != null && GetInput(out InputData inputData))
             {
                 _character1.destination = inputData.Destination;
             }

@@ -10,7 +10,6 @@ namespace Legends.Controllers
     {
         public override void Spawned()
         {
-
             if (Object.HasInputAuthority)
             {
                 GameManager.Instance.SetPlayerController(this);
