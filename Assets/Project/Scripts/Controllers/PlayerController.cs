@@ -2,6 +2,8 @@ using Fusion;
 using Legends.Managers;
 using System;
 using Legends.Core.Models;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace Legends.Controllers
 {
@@ -14,7 +16,6 @@ namespace Legends.Controllers
             {
                 GameManager.Instance.SetPlayerController(this);
             }
-
         }
     }
 

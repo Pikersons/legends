@@ -1,6 +1,8 @@
 ﻿using Fusion;
+using Legends.Controllers;
 using Legends.Core.Models;
 using Legends.Managers;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,26 +10,14 @@ namespace Assets.Project.Scripts.Controllers
 {
     public class CharacterMovementController : NetworkBehaviour
     {
-        [SerializeField] private NavMeshAgent _character1;
-
-        public void SetCharacter1(NetworkObject character)
-        {
-            _character1 = character.GetComponent<NavMeshAgent>();
-        }
-
-        public override void Spawned()
-        {
-            if (HasInputAuthority)
-            {
-                GameManager.Instance.SetCharacterMovementController(this);
-            }
-        }
+        [SerializeField]
+        private NavMeshAgent _navMeshAgent;
 
         public override void FixedUpdateNetwork()
         {
-            if (_character1 != null && GetInput(out InputData inputData))
+            if (GetInput(out InputData inputData))
             {
-                _character1.destination = inputData.Destination;
+                _navMeshAgent.destination = inputData.Destination;
             }
         }
     }

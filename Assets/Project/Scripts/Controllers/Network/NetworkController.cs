@@ -50,10 +50,7 @@ namespace Legends.Controllers
         {
             if (runner.IsServer)
             {
-                NetworkObject characterObject = runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
-                NetworkObject movementControllerObject = runner.Spawn(_movementController, inputAuthority: player);
-                //CharacterMovementController movementController = movementControllerObject.GetComponent<CharacterMovementController>();
-                //movementController.SetCharacter1(characterObject);
+                runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
             }
         }
 
