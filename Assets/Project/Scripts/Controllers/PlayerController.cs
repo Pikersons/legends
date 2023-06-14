@@ -10,6 +10,9 @@ namespace Legends.Controllers
 
     public class PlayerController : NetworkBehaviour
     {
+        [Networked]
+        public int Life { get; set; }
+
         public override void Spawned()
         {
             if (Object.HasInputAuthority)

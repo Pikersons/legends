@@ -53,7 +53,9 @@ namespace Legends.Controllers
                 && !_characters.ContainsKey(player))
             {
                 NetworkObject networkObject = runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
-                _characters.Add(player, networkObject.GetComponent<PlayerController>());
+                PlayerController playerController = networkObject.GetComponent<PlayerController>();
+                playerController.Life = UnityEngine.Random.Range(50, 100);
+                _characters.Add(player, playerController);
             }
         }
 
