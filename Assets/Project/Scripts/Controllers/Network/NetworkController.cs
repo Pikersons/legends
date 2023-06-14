@@ -17,8 +17,9 @@ namespace Legends.Controllers
         [Space]
         [SerializeField] private InputManager _inputManager;
         [Space]
-        [SerializeField] private NetworkPrefabRef _movementController;
         [SerializeField] private NetworkPrefabRef _prefab;
+
+        private Dictionary<PlayerRef, PlayerController> _characters;
 
         public void OnConnectedToServer(NetworkRunner runner)
         { }
@@ -48,9 +49,11 @@ namespace Legends.Controllers
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            if (runner.IsServer)
+            if (runner.IsServer
+                && !_characters.ContainsKey(player))
             {
-                runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
+                NetworkObject networkObject = runner.Spawn(_prefab, position: Vector3.up, inputAuthority: player);
+                _characters.Add(player, networkObject.GetComponent<PlayerController>());
             }
         }
 
@@ -76,6 +79,11 @@ namespace Legends.Controllers
         { }
 
         #region Unity
+        private void Awake()
+        {
+            _characters = new Dictionary<PlayerRef, PlayerController> { };
+        }
+
         private void OnGUI()
         {
             if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
