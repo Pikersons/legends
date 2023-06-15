@@ -19,6 +19,10 @@ namespace Legends.Controllers
             {
                 GameManager.Instance.SetPlayerController(this);
             }
+            else
+            {
+                GameManager.Instance.AddPlayer(Object.InputAuthority, this);
+            }
         }
     }
 

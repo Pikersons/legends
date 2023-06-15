@@ -14,14 +14,25 @@ namespace Assets.Project.Scripts.Controllers
         private NavMeshAgent _navMeshAgent;
 
         [SerializeField]
-        private int _target;
+        private int _targetId = -1;
+
+        private PlayerRef _targetPlayerRef;
 
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out InputData inputData))
             {
-                _navMeshAgent.destination = inputData.Destination;
-                _target = inputData.TargetPlayerRef.RawEncoded;
+                _targetId = inputData.TargetPlayerRef.PlayerId;
+                _targetPlayerRef = inputData.TargetPlayerRef;
+                if (_targetPlayerRef.IsNone == false)
+                {
+                    PlayerController playerController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
+                    _navMeshAgent.destination = playerController.transform.position;
+                }
+                else
+                {
+                    _navMeshAgent.destination = inputData.Destination;
+                }
             }
         }
     }

@@ -19,6 +19,8 @@ namespace Legends.Managers
 
         private PlayerController _playerController;
 
+        private Dictionary<PlayerRef, PlayerController> _otherPlayers;
+
         private void Awake()
         {
             if (Instance != null)
@@ -34,6 +36,16 @@ namespace Legends.Managers
             _playerController = playerController;
             _inputManager.SetPlayerRef(playerController.GetComponent<NetworkObject>().InputAuthority);
             _playerCamera.SetTarget(_playerController.transform);
+        }
+
+        public void AddPlayer(PlayerRef inputAuthority, PlayerController playerController)
+        {
+            _otherPlayers.Add(inputAuthority, playerController);
+        }
+
+        public PlayerController GetPlayerController(PlayerRef targetPlayerRef)
+        {
+            return _otherPlayers[targetPlayerRef];
         }
     }
 }

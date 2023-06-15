@@ -37,6 +37,10 @@ namespace Legends.Managers
                     {
                         _targetPlayerRef = networkObject.InputAuthority;
                     }
+                    else
+                    {
+                        _targetPlayerRef = PlayerRef.None;
+                    }
                 }
             }
         }
