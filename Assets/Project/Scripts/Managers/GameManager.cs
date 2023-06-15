@@ -19,7 +19,7 @@ namespace Legends.Managers
 
         private PlayerController _playerController;
 
-        private Dictionary<PlayerRef, PlayerController> _otherPlayers;
+        private Dictionary<PlayerRef, PlayerController> _playerControllers;
 
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace Legends.Managers
             }
 
             Instance = this;
-            _otherPlayers = new Dictionary<PlayerRef, PlayerController>();
+            _playerControllers = new Dictionary<PlayerRef, PlayerController>();
         }
 
         public void SetPlayerController(PlayerController playerController)
@@ -41,12 +41,12 @@ namespace Legends.Managers
 
         public void AddPlayer(PlayerRef inputAuthority, PlayerController playerController)
         {
-            _otherPlayers.Add(inputAuthority, playerController);
+            _playerControllers.Add(inputAuthority, playerController);
         }
 
         public PlayerController GetPlayerController(PlayerRef targetPlayerRef)
         {
-            return _otherPlayers[targetPlayerRef];
+            return _playerControllers[targetPlayerRef];
         }
     }
 }
