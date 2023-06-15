@@ -18,6 +18,8 @@ namespace Assets.Project.Scripts.Controllers
 
         private PlayerRef _targetPlayerRef;
 
+        private bool _hasDestination;
+
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out InputData inputData))
@@ -27,14 +29,20 @@ namespace Assets.Project.Scripts.Controllers
                 if (_targetPlayerRef.IsNone == false)
                 {
                     PlayerController playerController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
+                    _navMeshAgent.isStopped = false;
+                    _hasDestination = false;
                     _navMeshAgent.destination = playerController.transform.position;
                 }
                 else if(inputData.IsLeftMouseDown)
                 {
+                    _navMeshAgent.isStopped = false;
+                    _hasDestination = true;
                     _navMeshAgent.destination = inputData.Destination;
                 }
-                else if (_navMeshAgent.remainingDistance <= 0)
+                else if (_navMeshAgent.remainingDistance <= 0 
+                    || _hasDestination == false)
                 {
+                    _hasDestination = false;
                     _navMeshAgent.isStopped = true;
                 }
             }
