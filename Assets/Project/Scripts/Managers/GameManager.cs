@@ -29,6 +29,7 @@ namespace Legends.Managers
             }
 
             Instance = this;
+            _otherPlayers = new Dictionary<PlayerRef, PlayerController>();
         }
 
         public void SetPlayerController(PlayerController playerController)
