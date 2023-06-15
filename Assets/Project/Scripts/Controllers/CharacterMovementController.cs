@@ -25,31 +25,37 @@ namespace Assets.Project.Scripts.Controllers
             if (GetInput(out InputData inputData))
             {
                 _targetId = inputData.TargetPlayerRef.PlayerId;
-                _targetPlayerRef = inputData.TargetPlayerRef;
 
-                if (_targetPlayerRef.IsNone == false)
+                if (inputData.IsRightMouseDown)
                 {
-                    PlayerController playerController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
-                    _navMeshAgent.isStopped = false;
-                    _hasDestination = false;
-                    _navMeshAgent.destination = playerController.transform.position;
+                    _targetPlayerRef = inputData.TargetPlayerRef;
                 }
-                
-                if(inputData.IsLeftMouseDown == true)
+
+                if (inputData.IsLeftMouseDown)
                 {
-                    _navMeshAgent.destination = inputData.Destination;
                     _navMeshAgent.isStopped = false;
                     _hasDestination = true;
+                    _navMeshAgent.destination = inputData.Destination;
                     _targetPlayerRef = PlayerRef.None;
                 }
-                
-                if (_targetPlayerRef.IsNone == true
-                    && inputData.IsLeftMouseDown == false
-                    && (_navMeshAgent.remainingDistance <= 0 || _hasDestination == false))
-                {
-                    _hasDestination = false;
-                    _navMeshAgent.isStopped = true;
-                }
+            }
+
+            if (_targetPlayerRef.IsNone == false)
+            {
+                _navMeshAgent.isStopped = false;
+                _hasDestination = false;
+                PlayerController playerController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
+
+                Vector3 dif = playerController.transform.position - transform.position;
+                Vector3 targetPostion = dif.magnitude < 5.0f ? transform.position : playerController.transform.position - dif.normalized * 5.0f;
+
+                _navMeshAgent.destination = targetPostion;
+            }
+
+            if (_targetPlayerRef.IsNone && (_navMeshAgent.remainingDistance <= 0 || _hasDestination == false))
+            {
+                _hasDestination = false;
+                _navMeshAgent.isStopped = true;
             }
         }
     }
