@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028353, g: 0.22571383, b: 0.30692253, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -183,8 +183,6 @@ MonoBehaviour:
   _runner: {fileID: 153262092}
   _networkSceneManager: {fileID: 153262091}
   _inputManager: {fileID: 499737178}
-  _movementController:
-    RawGuidValue: a135f51eeaf67674fa93a278f4a98dc6
   _prefab:
     RawGuidValue: b514a7c01d4df4acdbe724180ced7274
 --- !u!4 &153262094
@@ -849,6 +847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 206098898}
+  _inputManager: {fileID: 499737178}
 --- !u!1 &1298938711
 GameObject:
   m_ObjectHideFlags: 0

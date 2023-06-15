@@ -15,6 +15,8 @@ namespace Legends.Managers
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private CameraController _playerCamera;
+        [SerializeField] private InputManager _inputManager;
+
         private PlayerController _playerController;
 
         private void Awake()
@@ -30,6 +32,7 @@ namespace Legends.Managers
         public void SetPlayerController(PlayerController playerController)
         {
             _playerController = playerController;
+            _inputManager.SetPlayerRef(playerController.GetComponent<NetworkObject>().InputAuthority);
             _playerCamera.SetTarget(_playerController.transform);
         }
     }

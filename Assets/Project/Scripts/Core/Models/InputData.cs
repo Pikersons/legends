@@ -7,9 +7,12 @@ namespace Legends.Core.Models
     {
         public Vector3 Destination { get; }
 
-        public InputData(Vector3 _destination)
+        public PlayerRef TargetPlayerRef { get; }
+
+        public InputData(Vector3 destination, PlayerRef targetPlayerRef)
         {
-            Destination = _destination;
+            Destination = destination;
+            TargetPlayerRef = targetPlayerRef;
         }
     }
 }

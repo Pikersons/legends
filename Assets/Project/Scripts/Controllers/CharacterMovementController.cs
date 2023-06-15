@@ -13,11 +13,15 @@ namespace Assets.Project.Scripts.Controllers
         [SerializeField]
         private NavMeshAgent _navMeshAgent;
 
+        [SerializeField]
+        private int _target;
+
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out InputData inputData))
             {
                 _navMeshAgent.destination = inputData.Destination;
+                _target = inputData.TargetPlayerRef.RawEncoded;
             }
         }
     }
