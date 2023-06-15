@@ -29,9 +29,13 @@ namespace Assets.Project.Scripts.Controllers
                     PlayerController playerController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
                     _navMeshAgent.destination = playerController.transform.position;
                 }
-                else
+                else if(inputData.IsLeftMouseDown)
                 {
                     _navMeshAgent.destination = inputData.Destination;
+                }
+                else if (_navMeshAgent.remainingDistance <= 0)
+                {
+                    _navMeshAgent.isStopped = true;
                 }
             }
         }

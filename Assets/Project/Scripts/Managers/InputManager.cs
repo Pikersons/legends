@@ -10,25 +10,30 @@ namespace Legends.Managers
         private Vector3 _destination;
         private PlayerRef _playerRef;
         private PlayerRef _targetPlayerRef;
+        private bool _isLeftMouseDown;
+        private bool _isRightMouseDown;
 
         public void PopulateInput(NetworkInput input)
         {
-            InputData data = new(_destination, _targetPlayerRef);
+            InputData data = new(_destination, _targetPlayerRef, _isLeftMouseDown, _isRightMouseDown);
             input.Set(data);
         }
 
         #region Unity
         private void Update()
         {
-            if (Input.GetMouseButton(0))
+            _isLeftMouseDown = Input.GetMouseButton(0);
+            if (_isLeftMouseDown)
             {
+                
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
                 {
                     _destination = hit.point;
                 }
             }
 
-            if (Input.GetMouseButton(1))
+            _isRightMouseDown = Input.GetMouseButton(1);
+            if (_isRightMouseDown)
             {
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
                 {
