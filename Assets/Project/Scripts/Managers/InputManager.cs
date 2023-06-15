@@ -23,6 +23,7 @@ namespace Legends.Managers
         private void Update()
         {
             _isLeftMouseDown = Input.GetMouseButton(0);
+            _isRightMouseDown = Input.GetMouseButton(1);
             if (_isLeftMouseDown)
             {
                 
@@ -31,8 +32,6 @@ namespace Legends.Managers
                     _destination = hit.point;
                 }
             }
-
-            _isRightMouseDown = Input.GetMouseButton(1);
             if (_isRightMouseDown)
             {
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))

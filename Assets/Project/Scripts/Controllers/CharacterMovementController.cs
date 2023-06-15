@@ -26,6 +26,7 @@ namespace Assets.Project.Scripts.Controllers
             {
                 _targetId = inputData.TargetPlayerRef.PlayerId;
                 _targetPlayerRef = inputData.TargetPlayerRef;
+
                 if (_targetPlayerRef.IsNone == false)
                 {
                     PlayerController playerController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
@@ -33,14 +34,18 @@ namespace Assets.Project.Scripts.Controllers
                     _hasDestination = false;
                     _navMeshAgent.destination = playerController.transform.position;
                 }
-                else if(inputData.IsLeftMouseDown)
+                
+                if(inputData.IsLeftMouseDown == true)
                 {
+                    _navMeshAgent.destination = inputData.Destination;
                     _navMeshAgent.isStopped = false;
                     _hasDestination = true;
-                    _navMeshAgent.destination = inputData.Destination;
+                    _targetPlayerRef = PlayerRef.None;
                 }
-                else if (_navMeshAgent.remainingDistance <= 0 
-                    || _hasDestination == false)
+                
+                if (_targetPlayerRef.IsNone == true
+                    && inputData.IsLeftMouseDown == false
+                    && (_navMeshAgent.remainingDistance <= 0 || _hasDestination == false))
                 {
                     _hasDestination = false;
                     _navMeshAgent.isStopped = true;
