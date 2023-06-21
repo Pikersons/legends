@@ -44,6 +44,7 @@ namespace Legends.Controllers
 
                 if (inputData.IsLeftMouseDown)
                 {
+                    _projectileController.SetTarget(PlayerRef.None);
                     _characterMovementController.MoveTo(inputData.Destination);
                 }
             }

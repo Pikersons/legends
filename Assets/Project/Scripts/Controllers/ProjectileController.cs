@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Fusion;
 using Legends.Managers;
@@ -47,6 +46,8 @@ namespace Legends.Controllers
                 && _lastBulletTime + _bulletCooldown < Runner.SimulationTime)
             {
                 NetworkObject projectileObject = Runner.Spawn(_bulletPrefab, _firePosition.position);
+                BulletController bulletController = projectileObject.GetComponent<BulletController>();
+                bulletController.Collided += BulletControllet_Collided;
                 _bulletList.Add(projectileObject);
                 _lastBulletTime = Runner.SimulationTime;
             }
@@ -56,11 +57,18 @@ namespace Legends.Controllers
                 NetworkObject bulletObject = _bulletList[i];
                 PlayerController targetController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
 
+                Vector3 bulletPosition = bulletObject.transform.position;
                 bulletObject.transform.position = Vector3.MoveTowards(
-                    bulletObject.transform.position,
+                    bulletPosition,
                     targetController.transform.position,
                     _bulletSpeed * Runner.DeltaTime);
             }
+        }
+
+        private void BulletControllet_Collided(NetworkObject bulletObject)
+        {
+            _bulletList.Remove(bulletObject);
+            Runner.Despawn(bulletObject);
         }
     }
 }

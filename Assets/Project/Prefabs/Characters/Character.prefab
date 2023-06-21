@@ -312,7 +312,7 @@ MonoBehaviour:
   _bulletPrefab:
     RawGuidValue: e25a082581ea3804f89a6a93d85a83ac
   _firePosition: {fileID: 6618813156809679897}
-  _bulletSpeed: 2
+  _bulletSpeed: 15
   _bulletCooldown: 1
 --- !u!1 &4690820416201564344
 GameObject:
