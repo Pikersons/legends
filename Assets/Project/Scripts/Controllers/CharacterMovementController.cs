@@ -8,38 +8,17 @@ using UnityEngine.AI;
 
 namespace Assets.Project.Scripts.Controllers
 {
-    public class CharacterMovementController : NetworkBehaviour
+    public class CharacterMovementController : MonoBehaviour
     {
         [SerializeField]
         private NavMeshAgent _navMeshAgent;
-
-        [SerializeField]
-        private int _targetId = -1;
 
         private PlayerRef _targetPlayerRef;
 
         private bool _hasDestination;
 
-        public override void FixedUpdateNetwork()
+        public void OnFixedUpdateNetwork()
         {
-            if (GetInput(out InputData inputData))
-            {
-                _targetId = inputData.TargetPlayerRef.PlayerId;
-
-                if (inputData.IsRightMouseDown)
-                {
-                    _targetPlayerRef = inputData.TargetPlayerRef;
-                }
-
-                if (inputData.IsLeftMouseDown)
-                {
-                    _navMeshAgent.isStopped = false;
-                    _hasDestination = true;
-                    _navMeshAgent.destination = inputData.Destination;
-                    _targetPlayerRef = PlayerRef.None;
-                }
-            }
-
             if (_targetPlayerRef.IsNone == false)
             {
                 _navMeshAgent.isStopped = false;
@@ -57,6 +36,19 @@ namespace Assets.Project.Scripts.Controllers
                 _hasDestination = false;
                 _navMeshAgent.isStopped = true;
             }
+        }
+
+        public void SetTarget(PlayerRef playerRef)
+        {
+            _targetPlayerRef = playerRef;
+        }
+
+        public void MoveTo(Vector3 destination)
+        {
+            _navMeshAgent.isStopped = false;
+            _hasDestination = true;
+            _navMeshAgent.destination = destination;
+            _targetPlayerRef = PlayerRef.None;
         }
     }
 }
