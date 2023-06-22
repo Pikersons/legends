@@ -15,7 +15,7 @@ namespace Legends.Controllers
 
         [SerializeField]
         private float _bulletSpeed;
-        
+
         [SerializeField]
         private float _bulletCooldown;
 
@@ -23,11 +23,11 @@ namespace Legends.Controllers
 
         private PlayerRef _targetPlayerRef;
 
-        private List<NetworkObject> _bulletList;
+        private Dictionary<NetworkId, ProjectileData> _projectileDict;
 
         private void Awake()
         {
-            _bulletList = new List<NetworkObject>();
+            _projectileDict = new Dictionary<NetworkId, ProjectileData>();
         }
 
         public void SetTarget(PlayerRef targetPlayerRef)
@@ -42,32 +42,38 @@ namespace Legends.Controllers
                 return;
             }
 
-            if (_targetPlayerRef != PlayerRef.None 
+            if (_targetPlayerRef != PlayerRef.None
                 && _lastBulletTime + _bulletCooldown < Runner.SimulationTime)
             {
-                NetworkObject projectileObject = Runner.Spawn(_bulletPrefab, _firePosition.position);
-                BulletController bulletController = projectileObject.GetComponent<BulletController>();
-                bulletController.Collided += BulletControllet_Collided;
-                _bulletList.Add(projectileObject);
-                _lastBulletTime = Runner.SimulationTime;
+                SpawnProjectile();
             }
 
-            for (int i = 0; i < _bulletList.Count; i++)
+            foreach (KeyValuePair<NetworkId,ProjectileData> projectileDataKvp in _projectileDict)
             {
-                NetworkObject bulletObject = _bulletList[i];
-                PlayerController targetController = GameManager.Instance.GetPlayerController(_targetPlayerRef);
+                ProjectileData projectileData = projectileDataKvp.Value;
+                PlayerController targetController =
+                    GameManager.Instance.GetPlayerController(projectileData.TargetPlayerRef);
 
-                Vector3 bulletPosition = bulletObject.transform.position;
-                bulletObject.transform.position = Vector3.MoveTowards(
+                Vector3 bulletPosition = projectileData.Object.transform.position;
+                projectileData.Object.transform.position = Vector3.MoveTowards(
                     bulletPosition,
                     targetController.transform.position,
                     _bulletSpeed * Runner.DeltaTime);
             }
         }
 
-        private void BulletControllet_Collided(NetworkObject bulletObject)
+        private void SpawnProjectile()
         {
-            _bulletList.Remove(bulletObject);
+            NetworkObject projectileObject = Runner.Spawn(_bulletPrefab, _firePosition.position);
+            BulletController bulletController = projectileObject.GetComponent<BulletController>();
+            bulletController.Collided += BulletController_Collided;
+            _projectileDict.Add(projectileObject.Id, new ProjectileData(projectileObject, _targetPlayerRef));
+            _lastBulletTime = Runner.SimulationTime;
+        }
+
+        private void BulletController_Collided(NetworkObject bulletObject)
+        {
+            _projectileDict.Remove(bulletObject.Id);
             Runner.Despawn(bulletObject);
         }
     }
