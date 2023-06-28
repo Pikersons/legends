@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80b20d4334c49b54ab8e632074db3c6f, type: 3}
-  m_Name: Fireball
+  m_Script: {fileID: 11500000, guid: b35975409e289884e84f680743a0327b, type: 3}
+  m_Name: GameSettings
   m_EditorClassIdentifier: 
-  _damage: 10
-  _resource: 10
+  _gameMode: 4

@@ -282,6 +282,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _characterMovementController: {fileID: 1017305623090929714}
   _projectileController: {fileID: 3629650185938307743}
+  _renderer: {fileID: 4690820416201564351}
   _Life: 0
 --- !u!114 &1017305623090929714
 MonoBehaviour:

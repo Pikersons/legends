@@ -8,25 +8,14 @@ namespace Legends.Controllers
 {
     public class PlayerController : NetworkBehaviour
     {
-        [SerializeField]
-        private PlayerMoveController _characterMovementController;
-
-        [SerializeField]
-        private PlayerProjectileController _projectileController;
+        [SerializeField] private PlayerMoveController _characterMovementController;
+        [SerializeField] private PlayerProjectileController _projectileController;
+        [SerializeField] private Renderer _renderer;
 
         private PlayerRef _targetPlayerRef;
 
         [Networked]
         public int Life { get; set; }
-
-        public override void Spawned()
-        {
-            if (Object.HasInputAuthority)
-            {
-                GameManager.Instance.SetPlayerController(this);
-            }
-            GameManager.Instance.AddPlayer(Object.InputAuthority, this);
-        }
 
         public override void FixedUpdateNetwork()
         {
@@ -48,6 +37,20 @@ namespace Legends.Controllers
 
             _characterMovementController.OnFixedUpdateNetwork();
             _projectileController.OnFixedUpdateNetwork();
+        }
+
+        public void SetMaterial(Material material)
+        {
+            _renderer.material = material;
+        }
+
+        public override void Spawned()
+        {
+            if (Object.HasInputAuthority)
+            {
+                GameManager.Instance.SetPlayerController(this);
+            }
+            GameManager.Instance.AddPlayer(Object.InputAuthority, this);
         }
     }
 }

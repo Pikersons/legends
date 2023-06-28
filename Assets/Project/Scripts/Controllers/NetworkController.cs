@@ -16,8 +16,6 @@ namespace Legends.Controllers
         [SerializeField] private NetworkSceneManagerDefault _networkSceneManager;
         [Space]
         [SerializeField] private InputManager _inputManager;
-        [Space]
-        [SerializeField] private NetworkPrefabRef _prefab;
 
         private Dictionary<PlayerRef, PlayerController> _characters;
 
@@ -50,21 +48,6 @@ namespace Legends.Controllers
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             PlayerJoined?.Invoke(player);
-
-            if (runner.IsServer && !_characters.ContainsKey(player))
-            {
-                NetworkObject networkObject = runner
-                    .Spawn(_prefab,
-                           position: Vector3.up,
-                           inputAuthority: player,
-                           onBeforeSpawned: (networkRunner, @object) =>
-                           {
-                               Debug.Log($"RODOU NO CLIENT? - {networkRunner.IsServer} - {networkRunner.IsClient} - {@object.HasInputAuthority}");
-                           });
-                PlayerController playerController = networkObject.GetComponent<PlayerController>();
-                playerController.Life = UnityEngine.Random.Range(50, 100);
-                _characters.Add(player, playerController);
-            }
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
