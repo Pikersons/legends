@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Fusion;
+using Legends.Core.Models;
 using Legends.Managers;
 using UnityEngine;
 
 namespace Legends.Controllers
 {
-    public class ProjectileController : NetworkBehaviour
+    public class PlayerProjectileController : NetworkBehaviour
     {
         [SerializeField]
         private NetworkPrefabRef _bulletPrefab;
@@ -48,7 +49,7 @@ namespace Legends.Controllers
                 SpawnProjectile();
             }
 
-            foreach (KeyValuePair<NetworkId,ProjectileData> projectileDataKvp in _projectileDict)
+            foreach (KeyValuePair<NetworkId, ProjectileData> projectileDataKvp in _projectileDict)
             {
                 ProjectileData projectileData = projectileDataKvp.Value;
                 PlayerController targetController =

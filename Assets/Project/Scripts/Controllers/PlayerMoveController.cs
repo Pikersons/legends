@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace Assets.Project.Scripts.Controllers
 {
-    public class CharacterMovementController : MonoBehaviour
+    public class PlayerMoveController : MonoBehaviour
     {
         [SerializeField]
         private NavMeshAgent _navMeshAgent;

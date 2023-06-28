@@ -1,24 +1,21 @@
-using Fusion;
-using Legends.Managers;
-using System;
 using Assets.Project.Scripts.Controllers;
+using Fusion;
 using Legends.Core.Models;
+using Legends.Managers;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Legends.Controllers
 {
-
     public class PlayerController : NetworkBehaviour
     {
         [SerializeField]
-        private CharacterMovementController _characterMovementController;
-        
+        private PlayerMoveController _characterMovementController;
+
         [SerializeField]
-        private ProjectileController _projectileController;
+        private PlayerProjectileController _projectileController;
 
         private PlayerRef _targetPlayerRef;
-            
+
         [Networked]
         public int Life { get; set; }
 
@@ -35,20 +32,20 @@ namespace Legends.Controllers
         {
             if (GetInput(out InputData inputData))
             {
-                if (inputData.IsRightMouseDown)
+                if (inputData.IsSecondaryDown)
                 {
                     _targetPlayerRef = inputData.TargetPlayerRef;
                     _projectileController.SetTarget(_targetPlayerRef);
                     _characterMovementController.SetTarget(_targetPlayerRef);
                 }
 
-                if (inputData.IsLeftMouseDown)
+                if (inputData.IsPrimaryDown)
                 {
                     _projectileController.SetTarget(PlayerRef.None);
                     _characterMovementController.MoveTo(inputData.Destination);
                 }
             }
-            
+
             _characterMovementController.OnFixedUpdateNetwork();
             _projectileController.OnFixedUpdateNetwork();
         }

@@ -1,20 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Assets.Project.Scripts.Controllers;
 using Fusion;
 using Legends.Controllers;
 using UnityEngine;
-
 
 namespace Legends.Managers
 {
     public class GameManager : MonoBehaviour
     {
-
         public static GameManager Instance { get; private set; }
 
+        [Header("Network")]
+        [SerializeField] private NetworkController _networkController;
+
+        [Header("Player")]
         [SerializeField] private CameraController _playerCamera;
+
+        [Header("Managers")]
         [SerializeField] private InputManager _inputManager;
 
         private PlayerController _playerController;
@@ -50,5 +52,3 @@ namespace Legends.Managers
         }
     }
 }
-
-

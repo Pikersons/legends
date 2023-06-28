@@ -5,15 +5,15 @@ namespace Legends.Core.Models
 {
     public readonly struct InputData : INetworkInput
     {
-        private const int BUTTON_FIRE = 1;
-        private const int BUTTON_FIRE_ALT = 2;
+        private const int _buttonPrimary = 1;
+        private const int _buttonSecondary = 2;
 
         private readonly NetworkButtons _buttons;
 
         public Vector3 Destination { get; }
         public PlayerRef TargetPlayerRef { get; }
-        public bool IsLeftMouseDown { get => _buttons.IsSet(BUTTON_FIRE); set => _buttons.Set(BUTTON_FIRE, value); }
-        public bool IsRightMouseDown { get => _buttons.IsSet(BUTTON_FIRE_ALT); set => _buttons.Set(BUTTON_FIRE_ALT, value); }
+        public bool IsPrimaryDown { get => _buttons.IsSet(_buttonPrimary); set => _buttons.Set(_buttonPrimary, value); }
+        public bool IsSecondaryDown { get => _buttons.IsSet(_buttonSecondary); set => _buttons.Set(_buttonSecondary, value); }
 
         public InputData(Vector3 destination, PlayerRef targetPlayerRef, bool isLeftMouseDown, bool isRightMouseDown)
         {
@@ -21,8 +21,8 @@ namespace Legends.Core.Models
             TargetPlayerRef = targetPlayerRef;
 
             _buttons = new NetworkButtons();
-            _buttons.Set(BUTTON_FIRE, isLeftMouseDown);
-            _buttons.Set(BUTTON_FIRE_ALT, isRightMouseDown);
+            _buttons.Set(_buttonPrimary, isLeftMouseDown);
+            _buttons.Set(_buttonSecondary, isRightMouseDown);
         }
     }
 }

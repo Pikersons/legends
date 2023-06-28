@@ -1,8 +1,8 @@
 using Fusion;
 
-namespace Legends.Controllers
+namespace Legends.Core.Models
 {
-    public struct ProjectileData
+    public readonly struct ProjectileData
     {
         public NetworkObject Object { get; }
         public PlayerRef TargetPlayerRef { get; }
