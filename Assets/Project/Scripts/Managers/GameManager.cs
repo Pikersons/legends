@@ -64,14 +64,23 @@ namespace Legends.Managers
 
         private void NetworkController_PlayerJoined(PlayerRef player)
         {
-            if (_networkRunner.IsServer && !_playerControllers.ContainsKey(player))
+            if (_networkRunner.IsServer)
             {
-                NetworkObject networkObject = _networkRunner
-                    .Spawn(_playerPrefab,
-                           position: Vector3.up,
-                           inputAuthority: player);
-                PlayerController playerController = networkObject.GetComponent<PlayerController>();
-                playerController.Rpc_SetMaterial(1);
+                if (_playerControllers.TryGetValue(player, out PlayerController playerController))
+                {
+                    Debug.Log($"Reconncted - {player}");
+                    playerController.Teste();
+                }
+                else
+                {
+                    Debug.Log($"Connected - {player}");
+                    NetworkObject networkObject = _networkRunner
+                        .Spawn(_playerPrefab,
+                               position: Vector3.up,
+                               inputAuthority: player);
+                    playerController = networkObject.GetComponent<PlayerController>();
+                    playerController.Teste();
+                }
             }
         }
 

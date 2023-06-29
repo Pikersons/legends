@@ -38,10 +38,17 @@ namespace Legends.Controllers
             _projectileController.OnFixedUpdateNetwork();
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        public void Rpc_SetMaterial(int materialIndex)
+        public void Teste()
+        {
+            RpcInvokeInfo info = RPC_SetMaterial(1);
+            Debug.Log(info);
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        public RpcInvokeInfo RPC_SetMaterial(int materialIndex)
         {
             _renderer.material = _playerSettings.Materials[materialIndex];
+            return default;
         }
 
         public override void Spawned()
