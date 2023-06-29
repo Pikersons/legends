@@ -1,5 +1,4 @@
 using Fusion;
-using Legends.Controllers;
 using Legends.Core.Models;
 using UnityEngine;
 
@@ -7,16 +6,21 @@ namespace Legends.Managers
 {
     public class InputManager : MonoBehaviour
     {
-        private Vector3 _destination;
         private PlayerRef _playerRef;
         private PlayerRef _targetPlayerRef;
+        private Vector3 _destination;
         private bool _isLeftMouseDown;
         private bool _isRightMouseDown;
+        private bool _isInputChanged;
 
         public void PopulateInput(NetworkInput input)
         {
-            InputData data = new(_destination, _targetPlayerRef, _isLeftMouseDown, _isRightMouseDown);
-            input.Set(data);
+            if (_isInputChanged)
+            {
+                InputData data = new(_destination, _targetPlayerRef, _isLeftMouseDown, _isRightMouseDown);
+                input.Set(data);
+                _isInputChanged = false;
+            }
         }
 
         #region Unity
@@ -26,11 +30,12 @@ namespace Legends.Managers
             _isRightMouseDown = Input.GetMouseButton(1);
             if (_isLeftMouseDown)
             {
-                
+
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
                 {
                     _destination = hit.point;
                 }
+                _isInputChanged = true;
             }
             if (_isRightMouseDown)
             {
@@ -46,6 +51,7 @@ namespace Legends.Managers
                         _targetPlayerRef = PlayerRef.None;
                     }
                 }
+                _isInputChanged = true;
             }
         }
         #endregion

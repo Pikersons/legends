@@ -31,7 +31,7 @@ namespace Assets.Project.Scripts.Controllers
                 _navMeshAgent.destination = targetPostion;
             }
 
-            if (_targetPlayerRef.IsNone && (_navMeshAgent.remainingDistance <= 0 || _hasDestination == false))
+            if (_targetPlayerRef.IsNone && (_navMeshAgent.remainingDistance < 1 || _hasDestination == false))
             {
                 _hasDestination = false;
                 _navMeshAgent.isStopped = true;
