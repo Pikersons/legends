@@ -4,7 +4,6 @@ using Fusion;
 using Fusion.Sockets;
 using Legends.Managers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Legends.Controllers
 {
@@ -12,12 +11,7 @@ namespace Legends.Controllers
     {
         public event Action<PlayerRef> PlayerJoined;
 
-        [SerializeField] private NetworkRunner _runner;
-        [SerializeField] private NetworkSceneManagerDefault _networkSceneManager;
-        [Space]
         [SerializeField] private InputManager _inputManager;
-
-        private Dictionary<PlayerRef, PlayerController> _characters;
 
         public void OnConnectedToServer(NetworkRunner runner)
         { }
@@ -70,37 +64,5 @@ namespace Legends.Controllers
 
         public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
         { }
-
-        #region Unity
-        private void Awake()
-        {
-            _characters = new Dictionary<PlayerRef, PlayerController> { };
-        }
-
-        private void OnGUI()
-        {
-            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
-            {
-                StartGame(GameMode.Host);
-            }
-            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
-            {
-                StartGame(GameMode.Client);
-            }
-        }
-        #endregion
-
-        private async void StartGame(GameMode gameMode)
-        {
-            _runner.ProvideInput = true;
-
-            await _runner.StartGame(new StartGameArgs()
-            {
-                GameMode = gameMode,
-                SessionName = "Pikersons",
-                Scene = SceneManager.GetActiveScene().buildIndex,
-                SceneManager = _networkSceneManager
-            });
-        }
     }
 }

@@ -180,8 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda6a42e2916c4898a738dbdbcc15539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runner: {fileID: 153262092}
-  _networkSceneManager: {fileID: 153262091}
   _inputManager: {fileID: 499737178}
 --- !u!4 &153262094
 Transform:
@@ -814,6 +812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _networkController: {fileID: 153262093}
   _networkRunner: {fileID: 153262092}
+  _networkSceneManager: {fileID: 153262091}
   _playerCamera: {fileID: 206098898}
   _materials:
   - {fileID: 2100000, guid: f20f0552eca634b16a761dacc735c0ef, type: 2}

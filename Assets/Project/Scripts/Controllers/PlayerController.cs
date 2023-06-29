@@ -2,6 +2,7 @@ using Assets.Project.Scripts.Controllers;
 using Fusion;
 using Legends.Core.Models;
 using Legends.Managers;
+using Legends.ScriptableObjects;
 using UnityEngine;
 
 namespace Legends.Controllers
@@ -10,12 +11,10 @@ namespace Legends.Controllers
     {
         [SerializeField] private PlayerMoveController _characterMovementController;
         [SerializeField] private PlayerProjectileController _projectileController;
+        [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private Renderer _renderer;
 
         private PlayerRef _targetPlayerRef;
-
-        [Networked]
-        public int Life { get; set; }
 
         public override void FixedUpdateNetwork()
         {
@@ -39,9 +38,10 @@ namespace Legends.Controllers
             _projectileController.OnFixedUpdateNetwork();
         }
 
-        public void SetMaterial(Material material)
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void Rpc_SetMaterial(int materialIndex)
         {
-            _renderer.material = material;
+            _renderer.material = _playerSettings.Materials[materialIndex];
         }
 
         public override void Spawned()

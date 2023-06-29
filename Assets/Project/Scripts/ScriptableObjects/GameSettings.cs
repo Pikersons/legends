@@ -7,5 +7,7 @@ namespace Legends.ScriptableObjects
     public class GameSettings : ScriptableObject
     {
         [SerializeField] private GameMode _gameMode;
+
+        public GameMode GameMode => _gameMode;
     }
 }

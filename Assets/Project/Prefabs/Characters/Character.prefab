@@ -283,7 +283,7 @@ MonoBehaviour:
   _characterMovementController: {fileID: 1017305623090929714}
   _projectileController: {fileID: 3629650185938307743}
   _renderer: {fileID: 4690820416201564351}
-  _Life: 0
+  _playerSettings: {fileID: 11400000, guid: d015482741120e343916e8a7af8f5b15, type: 2}
 --- !u!114 &1017305623090929714
 MonoBehaviour:
   m_ObjectHideFlags: 0
