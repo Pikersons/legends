@@ -6,18 +6,50 @@ namespace Legends.Managers
 {
     public class InputManager : MonoBehaviour
     {
-        private PlayerRef _playerRef;
-        private PlayerRef _targetPlayerRef;
-        private Vector3 _destination;
-        private bool _isLeftMouseDown;
-        private bool _isRightMouseDown;
+        private Vector3 _pointerPosition;
         private bool _isInputChanged;
+        private bool _isPrimaryButtonDown;
+        private bool _isSecondaryButtonDown;
+
+        public Vector3 PointerPosition
+        {
+            get => _pointerPosition;
+            set
+            {
+                _pointerPosition = value;
+                _isInputChanged = true;
+            }
+        }
+
+        public bool IsPrimaryButtonDown
+        {
+            get => _isPrimaryButtonDown;
+            set
+            {
+                _isPrimaryButtonDown = value;
+                _isInputChanged = true;
+            }
+        }
+
+        public bool IsSecondaryButtonDown
+        {
+            get => _isSecondaryButtonDown;
+            set
+            {
+                _isSecondaryButtonDown = value;
+                _isInputChanged = true;
+            }
+        }
 
         public void PopulateInput(NetworkInput input)
         {
             if (_isInputChanged)
             {
-                InputData data = new(_destination, _targetPlayerRef, _isLeftMouseDown, _isRightMouseDown);
+                Debug.Log($"InputManager - {IsPrimaryButtonDown} - {IsSecondaryButtonDown} - {PointerPosition}");
+
+                InputData data = new(PointerPosition,
+                                     IsPrimaryButtonDown,
+                                     IsSecondaryButtonDown);
                 input.Set(data);
                 _isInputChanged = false;
             }
@@ -26,39 +58,21 @@ namespace Legends.Managers
         #region Unity
         private void Update()
         {
-            _isLeftMouseDown = Input.GetMouseButton(0);
-            _isRightMouseDown = Input.GetMouseButton(1);
-            if (_isLeftMouseDown)
+            bool isPrimaryButtonDown = Input.GetMouseButton((int)InputButton.PrimaryButton);
+            bool isSecondaryButtonDown = Input.GetMouseButton((int)InputButton.SecondaryButton);
+            if (isPrimaryButtonDown != IsPrimaryButtonDown)
             {
-
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-                {
-                    _destination = hit.point;
-                }
-                _isInputChanged = true;
+                IsPrimaryButtonDown = isPrimaryButtonDown;
             }
-            if (_isRightMouseDown)
+            if (isSecondaryButtonDown != IsSecondaryButtonDown)
             {
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-                {
-                    NetworkObject networkObject = hit.transform.gameObject.GetComponentInParent<NetworkObject>();
-                    if (networkObject != null && networkObject.InputAuthority != _playerRef)
-                    {
-                        _targetPlayerRef = networkObject.InputAuthority;
-                    }
-                    else
-                    {
-                        _targetPlayerRef = PlayerRef.None;
-                    }
-                }
-                _isInputChanged = true;
+                IsSecondaryButtonDown = isSecondaryButtonDown;
+            }
+            if (Input.mousePosition != PointerPosition)
+            {
+                PointerPosition = Input.mousePosition;
             }
         }
         #endregion
-
-        public void SetPlayerRef(PlayerRef playerRef)
-        {
-            _playerRef = playerRef;
-        }
     }
 }

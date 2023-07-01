@@ -20,18 +20,20 @@ namespace Legends.Controllers
         {
             if (GetInput(out InputData inputData))
             {
-                if (inputData.IsSecondaryDown)
-                {
-                    _targetPlayerRef = inputData.TargetPlayerRef;
-                    _projectileController.SetTarget(_targetPlayerRef);
-                    _characterMovementController.SetTarget(_targetPlayerRef);
-                }
+                Debug.Log($"PlayerController - {inputData.IsPrimaryButtonDown} - {inputData.IsSecondaryButtonDown} - {inputData.PointerPosition}");
 
-                if (inputData.IsPrimaryDown)
-                {
-                    _projectileController.SetTarget(PlayerRef.None);
-                    _characterMovementController.MoveTo(inputData.Destination);
-                }
+                //if (inputData.IsSecondaryDown)
+                //{
+                //    _targetPlayerRef = inputData.TargetPlayerRef;
+                //    _projectileController.SetTarget(_targetPlayerRef);
+                //    _characterMovementController.SetTarget(_targetPlayerRef);
+                //}
+
+                //if (inputData.IsPrimaryDown)
+                //{
+                //    _projectileController.SetTarget(PlayerRef.None);
+                //    _characterMovementController.MoveTo(inputData.Destination);
+                //}
             }
 
             _characterMovementController.OnFixedUpdateNetwork();

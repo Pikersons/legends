@@ -3,26 +3,28 @@ using UnityEngine;
 
 namespace Legends.Core.Models
 {
+    public enum InputButton
+    {
+        PrimaryButton = 0,
+        SecondaryButton = 1,
+    }
+
     public readonly struct InputData : INetworkInput
     {
-        private const int _buttonPrimary = 1;
-        private const int _buttonSecondary = 2;
-
         private readonly NetworkButtons _buttons;
 
-        public Vector3 Destination { get; }
-        public PlayerRef TargetPlayerRef { get; }
-        public bool IsPrimaryDown { get => _buttons.IsSet(_buttonPrimary); set => _buttons.Set(_buttonPrimary, value); }
-        public bool IsSecondaryDown { get => _buttons.IsSet(_buttonSecondary); set => _buttons.Set(_buttonSecondary, value); }
+        public readonly Vector2 PointerPosition { get; }
+        public readonly bool IsPrimaryButtonDown => _buttons.IsSet(InputButton.PrimaryButton);
+        public readonly bool IsSecondaryButtonDown => _buttons.IsSet(InputButton.SecondaryButton);
 
-        public InputData(Vector3 destination, PlayerRef targetPlayerRef, bool isLeftMouseDown, bool isRightMouseDown)
+        public InputData(Vector2 pointerPosition,
+                         bool isPrimaryButtonDown,
+                         bool isSecondaryButtonDown)
         {
-            Destination = destination;
-            TargetPlayerRef = targetPlayerRef;
-
+            PointerPosition = pointerPosition;
             _buttons = new NetworkButtons();
-            _buttons.Set(_buttonPrimary, isLeftMouseDown);
-            _buttons.Set(_buttonSecondary, isRightMouseDown);
+            _buttons.Set(InputButton.PrimaryButton, isPrimaryButtonDown);
+            _buttons.Set(InputButton.SecondaryButton, isSecondaryButtonDown);
         }
     }
 }

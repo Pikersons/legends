@@ -39,7 +39,7 @@ namespace Legends.Managers
 
         public void SetPlayerController(PlayerController playerController)
         {
-            _inputManager.SetPlayerRef(playerController.GetComponent<NetworkObject>().InputAuthority);
+            //_inputManager.SetPlayerRef(playerController.GetComponent<NetworkObject>().InputAuthority);
             _playerCamera.SetTarget(playerController.transform);
         }
 
