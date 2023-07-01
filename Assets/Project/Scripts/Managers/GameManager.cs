@@ -19,7 +19,7 @@ namespace Legends.Managers
 
         [Header("Player")]
         [SerializeField] private CameraController _playerCamera;
-        [SerializeField] private NetworkPrefabRef _playerPrefab;
+        [SerializeField] private PlayerCharacter _playerCharacter;
 
         [Header("Game")]
         [SerializeField] private GameSettings _gameSettings;
@@ -27,20 +27,18 @@ namespace Legends.Managers
 
         private Dictionary<PlayerRef, PlayerController> _playerControllers;
 
-        public void AddPlayer(PlayerRef inputAuthority, PlayerController playerController)
+        public void AddPlayer(PlayerController playerController)
         {
-            _playerControllers.Add(inputAuthority, playerController);
+            if (playerController.Object.HasInputAuthority)
+            {
+                _playerCamera.SetTarget(playerController.transform);
+            }
+            _playerControllers.Add(playerController.Object.InputAuthority, playerController);
         }
 
         public PlayerController GetPlayerController(PlayerRef targetPlayerRef)
         {
             return _playerControllers[targetPlayerRef];
-        }
-
-        public void SetPlayerController(PlayerController playerController)
-        {
-            //_inputManager.SetPlayerRef(playerController.GetComponent<NetworkObject>().InputAuthority);
-            _playerCamera.SetTarget(playerController.transform);
         }
 
         #region Unity
@@ -69,17 +67,13 @@ namespace Legends.Managers
                 if (_playerControllers.TryGetValue(player, out PlayerController playerController))
                 {
                     Debug.Log($"Reconncted - {player}");
-                    playerController.Teste();
                 }
                 else
                 {
                     Debug.Log($"Connected - {player}");
-                    NetworkObject networkObject = _networkRunner
-                        .Spawn(_playerPrefab,
-                               position: Vector3.up,
-                               inputAuthority: player);
-                    playerController = networkObject.GetComponent<PlayerController>();
-                    playerController.Teste();
+                    _networkRunner.Spawn(_playerCharacter.PlayerPrefab,
+                                         inputAuthority: player,
+                                         position: Vector3.up);
                 }
             }
         }

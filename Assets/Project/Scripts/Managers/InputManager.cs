@@ -6,17 +6,28 @@ namespace Legends.Managers
 {
     public class InputManager : MonoBehaviour
     {
-        private Vector3 _pointerPosition;
+        private Vector3 _pointerScreenPosition;
+        private Vector3 _pointerWorldPosition;
         private bool _isInputChanged;
         private bool _isPrimaryButtonDown;
         private bool _isSecondaryButtonDown;
 
-        public Vector3 PointerPosition
+        public Vector3 PointerScreenPosition
         {
-            get => _pointerPosition;
+            get => _pointerScreenPosition;
             set
             {
-                _pointerPosition = value;
+                _pointerScreenPosition = value;
+                _isInputChanged = true;
+            }
+        }
+
+        public Vector3 PointerWorldPosition
+        {
+            get => _pointerWorldPosition;
+            set
+            {
+                _pointerWorldPosition = value;
                 _isInputChanged = true;
             }
         }
@@ -45,9 +56,8 @@ namespace Legends.Managers
         {
             if (_isInputChanged)
             {
-                Debug.Log($"InputManager - {IsPrimaryButtonDown} - {IsSecondaryButtonDown} - {PointerPosition}");
-
-                InputData data = new(PointerPosition,
+                InputData data = new(PointerScreenPosition,
+                                     PointerWorldPosition,
                                      IsPrimaryButtonDown,
                                      IsSecondaryButtonDown);
                 input.Set(data);
@@ -68,9 +78,16 @@ namespace Legends.Managers
             {
                 IsSecondaryButtonDown = isSecondaryButtonDown;
             }
-            if (Input.mousePosition != PointerPosition)
+            if (Input.mousePosition != PointerScreenPosition)
             {
-                PointerPosition = Input.mousePosition;
+                PointerScreenPosition = Input.mousePosition;
+            }
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            {
+                if (hit.point != PointerWorldPosition)
+                {
+                    PointerWorldPosition = hit.point;
+                }
             }
         }
         #endregion

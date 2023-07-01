@@ -13,15 +13,18 @@ namespace Legends.Core.Models
     {
         private readonly NetworkButtons _buttons;
 
-        public readonly Vector2 PointerPosition { get; }
+        public readonly Vector3 PointerScreenPosition { get; }
+        public readonly Vector3 PointerWorldPosition { get; }
         public readonly bool IsPrimaryButtonDown => _buttons.IsSet(InputButton.PrimaryButton);
         public readonly bool IsSecondaryButtonDown => _buttons.IsSet(InputButton.SecondaryButton);
 
-        public InputData(Vector2 pointerPosition,
+        public InputData(Vector3 pointerScreenPosition,
+                         Vector3 pointerWorldPosition,
                          bool isPrimaryButtonDown,
                          bool isSecondaryButtonDown)
         {
-            PointerPosition = pointerPosition;
+            PointerScreenPosition = pointerScreenPosition;
+            PointerWorldPosition = pointerWorldPosition;
             _buttons = new NetworkButtons();
             _buttons.Set(InputButton.PrimaryButton, isPrimaryButtonDown);
             _buttons.Set(InputButton.SecondaryButton, isSecondaryButtonDown);

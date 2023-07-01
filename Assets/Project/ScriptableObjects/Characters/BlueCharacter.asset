@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41f46be73464f3e4abe85fdb75c7d074, type: 3}
-  m_Name: PlayerSettings
+  m_Name: BlueCharacter
   m_EditorClassIdentifier: 
-  _materials:
-  - {fileID: 2100000, guid: f20f0552eca634b16a761dacc735c0ef, type: 2}
-  - {fileID: 2100000, guid: 8b66e896ac8b5433bb16efacd8fe4f15, type: 2}
-  - {fileID: 2100000, guid: 691f40fca297348aaa49184628bb3bf2, type: 2}
+  _playerPrefab:
+    RawGuidValue: 02bc20c12b0160548affa14cacd17f25

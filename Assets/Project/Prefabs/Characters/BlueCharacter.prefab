@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 1017305623090929714}
   - component: {fileID: 3629650185938307743}
   m_Layer: 0
-  m_Name: Character
+  m_Name: BlueCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,11 +225,12 @@ MonoBehaviour:
   AoiPositionSource: {fileID: 0}
   Flags: 2305
   NetworkGuid:
-    RawGuidValue: b514a7c01d4df4acdbe724180ced7274
+    RawGuidValue: 02bc20c12b0160548affa14cacd17f25
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -3013666957803707517}
   - {fileID: 2276106591496555502}
+  - {fileID: 1017305623090929714}
   - {fileID: 3629650185938307743}
   SimulationBehaviours: []
 --- !u!195 &7820163138408966189
@@ -282,8 +283,6 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _characterMovementController: {fileID: 1017305623090929714}
   _projectileController: {fileID: 3629650185938307743}
-  _renderer: {fileID: 4690820416201564351}
-  _playerSettings: {fileID: 11400000, guid: d015482741120e343916e8a7af8f5b15, type: 2}
 --- !u!114 &1017305623090929714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e44fe455d7154e8992448215ba506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _navMeshAgent: {fileID: 7820163138408966189}
 --- !u!114 &3629650185938307743
 MonoBehaviour:
@@ -378,7 +378,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f20f0552eca634b16a761dacc735c0ef, type: 2}
+  - {fileID: 2100000, guid: 062be4819a6630b4a9c55d20a12ea957, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

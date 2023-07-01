@@ -814,12 +814,7 @@ MonoBehaviour:
   _networkRunner: {fileID: 153262092}
   _networkSceneManager: {fileID: 153262091}
   _playerCamera: {fileID: 206098898}
-  _materials:
-  - {fileID: 2100000, guid: f20f0552eca634b16a761dacc735c0ef, type: 2}
-  - {fileID: 2100000, guid: 8b66e896ac8b5433bb16efacd8fe4f15, type: 2}
-  - {fileID: 2100000, guid: 691f40fca297348aaa49184628bb3bf2, type: 2}
-  _playerPrefab:
-    RawGuidValue: b514a7c01d4df4acdbe724180ced7274
+  _playerCharacter: {fileID: 11400000, guid: 27dbef5d4b6812c42b0c2cfb33090b00, type: 2}
   _gameSettings: {fileID: 11400000, guid: ea9b066b8942a404f9208785cc3fb306, type: 2}
   _inputManager: {fileID: 499737178}
 --- !u!1 &1298938711
