@@ -1,5 +1,6 @@
 using Assets.Project.Scripts.Controllers;
 using Fusion;
+using Legends.Core.Models;
 using Legends.Managers;
 using UnityEngine;
 
@@ -12,6 +13,10 @@ namespace Legends.Controllers
 
         public override void FixedUpdateNetwork()
         {
+            if (GetInput(out InputData inputData))
+            {
+                Debug.Log($"{inputData.NetworkId}");
+            }
             _projectileController.OnFixedUpdateNetwork();
         }
 

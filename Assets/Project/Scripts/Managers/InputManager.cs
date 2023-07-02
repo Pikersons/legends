@@ -6,11 +6,22 @@ namespace Legends.Managers
 {
     public class InputManager : MonoBehaviour
     {
+        private NetworkId _networkId;
         private Vector3 _pointerScreenPosition;
         private Vector3 _pointerWorldPosition;
         private bool _isInputChanged;
         private bool _isPrimaryButtonDown;
         private bool _isSecondaryButtonDown;
+
+        public NetworkId NetworkId
+        {
+            get => _networkId;
+            set
+            {
+                _networkId = value;
+                _isInputChanged = true;
+            }
+        }
 
         public Vector3 PointerScreenPosition
         {
@@ -56,7 +67,8 @@ namespace Legends.Managers
         {
             if (_isInputChanged)
             {
-                InputData data = new(PointerScreenPosition,
+                InputData data = new(NetworkId,
+                                     PointerScreenPosition,
                                      PointerWorldPosition,
                                      IsPrimaryButtonDown,
                                      IsSecondaryButtonDown);
@@ -70,6 +82,14 @@ namespace Legends.Managers
         {
             bool isPrimaryButtonDown = Input.GetMouseButton((int)InputButton.PrimaryButton);
             bool isSecondaryButtonDown = Input.GetMouseButton((int)InputButton.SecondaryButton);
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            {
+                NetworkObject networkObject = hit.transform.GetComponent<NetworkObject>();
+                if (hit.point != PointerWorldPosition)
+                {
+                    PointerWorldPosition = hit.point;
+                }
+            }
             if (isPrimaryButtonDown != IsPrimaryButtonDown)
             {
                 IsPrimaryButtonDown = isPrimaryButtonDown;
@@ -81,13 +101,6 @@ namespace Legends.Managers
             if (Input.mousePosition != PointerScreenPosition)
             {
                 PointerScreenPosition = Input.mousePosition;
-            }
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-            {
-                if (hit.point != PointerWorldPosition)
-                {
-                    PointerWorldPosition = hit.point;
-                }
             }
         }
         #endregion

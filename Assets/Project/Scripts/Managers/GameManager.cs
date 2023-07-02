@@ -71,7 +71,7 @@ namespace Legends.Managers
                 else
                 {
                     Debug.Log($"Connected - {player}");
-                    _networkRunner.Spawn(_playerCharacter.PlayerPrefab,
+                    _networkRunner.Spawn(_playerCharacter.PlayerPrefab, // mudar para escolha do player
                                          inputAuthority: player,
                                          position: Vector3.up);
                 }
