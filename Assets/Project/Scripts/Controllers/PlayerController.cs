@@ -13,10 +13,6 @@ namespace Legends.Controllers
 
         public override void FixedUpdateNetwork()
         {
-            if (GetInput(out InputData inputData))
-            {
-                Debug.Log($"{inputData.NetworkId}");
-            }
             _projectileController.OnFixedUpdateNetwork();
         }
 
