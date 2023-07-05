@@ -13,7 +13,10 @@ namespace Legends.Controllers
 
         public override void FixedUpdateNetwork()
         {
-            _projectileController.OnFixedUpdateNetwork();
+            if (GetInput(out InputData inputData))
+            {
+                //Debug.Log($"Player - {inputData.IsPrimaryButtonDown} - {inputData.IsSecondaryButtonDown} - {inputData.PointerScreenPosition} - {inputData.PointerWorldPosition} - {inputData.SelectedNetworkId} - {inputData.TargetNetworkId}");
+            }
         }
 
         public override void Spawned()

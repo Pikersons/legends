@@ -36,7 +36,7 @@ namespace Legends.Controllers
             _targetPlayerRef = targetPlayerRef;
         }
 
-        public void OnFixedUpdateNetwork()
+        public void FixedUpdateNetwork()
         {
             if (!Runner.IsServer)
             {

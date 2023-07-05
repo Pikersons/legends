@@ -15,8 +15,8 @@ namespace Assets.Project.Scripts.Controllers
             {
                 if (inputData.IsSecondaryButtonDown)
                 {
-                    _navMeshAgent.isStopped = false;
                     _navMeshAgent.destination = inputData.PointerWorldPosition;
+                    _navMeshAgent.isStopped = false;
                     _navMeshAgent.stoppingDistance = 1;
                 }
             }
