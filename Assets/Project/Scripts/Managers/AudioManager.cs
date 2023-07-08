@@ -7,20 +7,20 @@ namespace Legends.Managers
     [RequireComponent(typeof(AudioSource))]
     public class AudioManager : MonoBehaviour
     {
+        #region Setup
         [field: ReadOnly]
         [field: SerializeField]
         public AudioSource BGMAudioSource { get; set; }
-
-        #region Setup
-        private void Awake()
-        {
-            GetDepenencies();
-        }
 
         [Button("Setup")]
         public void GetDepenencies()
         {
             BGMAudioSource = GetComponent<AudioSource>();
+        }
+
+        private void Awake()
+        {
+            GetDepenencies();
         }
         #endregion
 

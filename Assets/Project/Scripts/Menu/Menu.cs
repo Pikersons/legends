@@ -45,6 +45,10 @@ namespace Legends.UI
         [field: ReadOnly]
         protected RectTransform RectTransform { private get; set; }
 
+
+        #endregion
+
+        #region Setup and Dependencies
         [Button("Setup Menu")]
         public void GetDependencies()
         {
@@ -52,13 +56,13 @@ namespace Legends.UI
             RectTransform = GetComponent<RectTransform>();
             AudioSource = GetComponent<AudioSource>();
         }
-        #endregion
 
         public virtual void Awake()
-        { 
+        {
             GetDependencies();
             IsVisible = false;
         }
+        #endregion
 
         public virtual void Show()
         {

@@ -1,5 +1,4 @@
 using System.Collections;
-using Legends.ScriptableObjects;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ namespace Legends.Controllers
     [RequireComponent(typeof(CanvasGroup))]
     public class FadeController : MonoBehaviour
     {
+        #region Dependencies and Setup
         public float FadeTime { get; set; }
         [field : SerializeField] public CanvasGroup CanvasGroup { get; set; }
 
@@ -25,6 +25,7 @@ namespace Legends.Controllers
         {
             CanvasGroup = GetComponent<CanvasGroup>();
         }
+        #endregion
 
         [Button("FadeIn")]
         public void FadeIn(float delay = 0)
@@ -38,6 +39,7 @@ namespace Legends.Controllers
             StartCoroutine(FadeOutCo(delay));
         }
 
+        #region Auxiliar Methods
         private IEnumerator FadeInCo(float delay = 0)
         {
             float start = CanvasGroup.alpha;
@@ -71,5 +73,6 @@ namespace Legends.Controllers
             CanvasGroup.alpha = end;
             CanvasGroup.blocksRaycasts = false;
         }
+        #endregion
     }
 }
