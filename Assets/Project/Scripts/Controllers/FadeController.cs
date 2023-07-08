@@ -27,22 +27,24 @@ namespace Legends.Controllers
         }
 
         [Button("FadeIn")]
-        public void FadeIn()
+        public void FadeIn(float delay = 0)
         {
-            StartCoroutine(FadeInCo());
+            StartCoroutine(FadeInCo(delay));
         }
 
         [Button("FadeOut")]
-        public void FadeOut()
+        public void FadeOut(float delay = 0)
         {
-            StartCoroutine(FadeOutCo());
+            StartCoroutine(FadeOutCo(delay));
         }
 
-        private IEnumerator FadeInCo()
+        private IEnumerator FadeInCo(float delay = 0)
         {
             float start = CanvasGroup.alpha;
             float end = 1f;
             float velocity = (end - start) / FadeTime; //vm = ds/dt
+
+            yield return new WaitForSeconds(delay);
 
             CanvasGroup.blocksRaycasts = true;
             while (CanvasGroup.alpha < end)
@@ -53,11 +55,13 @@ namespace Legends.Controllers
             CanvasGroup.alpha = end;
         }
 
-        private IEnumerator FadeOutCo()
+        private IEnumerator FadeOutCo(float delay = 0)
         {
             float start = CanvasGroup.alpha;
             float end = 0f;
             float velocity = (end - start) / FadeTime; //vm = ds/dt
+
+            yield return new WaitForSeconds(delay);
 
             while (CanvasGroup.alpha > end)
             {

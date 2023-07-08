@@ -64,26 +64,28 @@ namespace Legends.UI
         {
             if (IsVisible) return;
 
+            IsVisible = true;
             AudioSource.clip = ShowSound;
             AudioSource.pitch = MenuSettings.showSoundPitch;
             AudioSource.Play();
             RectTransform
                 .DOAnchorPos(ShowPosition, 1f, false)
                 .SetEase(MenuSettings.easeType)
-                .OnComplete( () => IsVisible = true );
+                .OnComplete( () => { } );
         }
 
         public virtual void Hide()
         {
             if (!IsVisible) return;
 
+            IsVisible = false;
             AudioSource.clip = HideSound;
             AudioSource.pitch = MenuSettings.hideSoundPitch;
             AudioSource.Play();
             RectTransform
                 .DOAnchorPos(HidePosition, 1f, false)
                 .SetEase(MenuSettings.easeType)
-                .OnComplete( () => IsVisible = false );
+                .OnComplete( () => { } );
         }
 
     }

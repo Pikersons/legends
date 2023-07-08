@@ -1,7 +1,8 @@
 using UnityEngine;
 using NaughtyAttributes;
 using Legends.Controllers;
-using Legends.ScriptableObjects;
+using Legends.Managers;
+using System.Collections;
 
 namespace Legends.UI
 {
@@ -14,12 +15,17 @@ namespace Legends.UI
 
         [field: Foldout("Create Room")]
         [field: SerializeField]
+        public AudioManager AudioManager { get; set; }
+
+        [field: Foldout("Create Room")]
+        [field: SerializeField]
         public AudioClip CreateRoomClickSound { get; set; }
 
         [Button("Setup Menu CreateRoom")]
         public new void GetDependencies()
         {
             FadeController = FindObjectOfType<FadeController>();
+            AudioManager = FindObjectOfType<AudioManager>();
         }
         #endregion
 
@@ -44,7 +50,16 @@ namespace Legends.UI
 
         public void OnClickCreateRoom()
         {
+            AudioManager.PlaySFX(CreateRoomClickSound);
+            FadeController.FadeIn(0.57f);
+            //StartCoroutine(OnClickCreateRoomCO());
+        }
+
+        public IEnumerator OnClickCreateRoomCO()
+        {
+            yield return AudioManager.PlaySFXCO(CreateRoomClickSound);
             FadeController.FadeIn();
+            
         }
     }
 }

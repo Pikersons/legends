@@ -9,5 +9,7 @@ namespace Legends.ScriptableObjects
         public Ease easeType;
         public float showSoundPitch;
         public float hideSoundPitch;
+        public float fadeInTime;
+        public float fadeOutTime;
     }
 }
