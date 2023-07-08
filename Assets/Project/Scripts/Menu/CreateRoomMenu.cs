@@ -10,6 +10,10 @@ namespace Legends.UI
         #region Dependencies and Setup
         [field: Foldout("Create Room")]
         [field: SerializeField]
+        public GameFlowManager GameFlowManager { get; set; }
+
+        [field: Foldout("Create Room")]
+        [field: SerializeField]
         public FadeController FadeController { get; set; }
 
         [field: Foldout("Create Room")]
@@ -23,6 +27,7 @@ namespace Legends.UI
         [Button("Setup Menu CreateRoom")]
         public new void GetDependencies()
         {
+            GameFlowManager = FindObjectOfType<GameFlowManager>();
             FadeController = FindObjectOfType<FadeController>();
             AudioManager = FindObjectOfType<AudioManager>();
         }
@@ -42,7 +47,7 @@ namespace Legends.UI
         public void OnClickCreateRoom()
         {
             AudioManager.PlaySFX(CreateRoomClickSound);
-            FadeController.FadeIn(0.57f);
+            GameFlowManager.TransitionToCharacterSelection();
         }
 
         #region Auxiliar Methods

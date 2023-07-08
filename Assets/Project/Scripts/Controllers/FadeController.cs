@@ -27,6 +27,18 @@ namespace Legends.Controllers
         }
         #endregion
 
+        [Button("FadeInInstant")]
+        public void FadeInInstant()
+        {
+            CanvasGroup.alpha = 1f;
+        }
+
+        [Button("FadeOutInstant")]
+        public void FadeOutInstant()
+        {
+            CanvasGroup.alpha = 0f;
+        }
+
         [Button("FadeIn")]
         public void FadeIn(float delay = 0)
         {
