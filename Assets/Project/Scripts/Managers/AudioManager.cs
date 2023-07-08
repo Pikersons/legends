@@ -1,8 +1,10 @@
 using System.Collections;
+using DG.Tweening;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using static Legends.Managers.AudioManager;
 
 namespace Legends.Managers
 {
@@ -10,6 +12,14 @@ namespace Legends.Managers
     public class AudioManager : MonoBehaviour
     {
         #region Setup
+        public enum MixerGroup
+        {
+            Master,
+            BGM,
+            SFX,
+            Environment
+        }
+
         [field: ReadOnly]
         [field: SerializeField]
         public AudioSource BGMAudioSource { get; set; }
@@ -53,24 +63,34 @@ namespace Legends.Managers
             Destroy(newAudioSource);
         }
 
-        public void MuteBGM()
+        public void Mute(MixerGroup group)
         {
-            AudioMixer.SetFloat("BGM", -80);
+            AudioMixer.SetFloat(group.ToString(), -80f);
         }
 
-        public void UnMuteBGM()
+        public void Unute(MixerGroup group)
         {
-            AudioMixer.SetFloat("BGM", 0);
+            AudioMixer.SetFloat(group.ToString(), 0f);
         }
 
-        public void FadeInBGM(float totalTime = 1f)
+        public void FadeOut(MixerGroup mixerGroup, float totalTime = 1f)
         {
-            StartCoroutine(FadeBGMCO(-80f, totalTime));
+            StartCoroutine(FadeMixerGroupVolume(mixerGroup, 80f, totalTime));
         }
 
-        public void FadeOutBGM(float totalTime = 1f)
+        public void FadeIn(MixerGroup mixerGroup, float totalTime = 1f)
         {
-            StartCoroutine(FadeBGMCO(0f, totalTime));
+            StartCoroutine(FadeMixerGroupVolume(mixerGroup, 0f, totalTime));
+        }
+
+        public void FadeInEnvironment(float totalTime = 1f)
+        {
+            StartCoroutine(FadeMixerGroupVolume(MixerGroup.Environment, -80f, totalTime));
+        }
+
+        public void FadeOutEnvironment(float totalTime = 1f)
+        {
+            StartCoroutine(FadeMixerGroupVolume(MixerGroup.Environment, 0f, totalTime));
         }
 
         #region Auxiliar Methods
@@ -91,21 +111,21 @@ namespace Legends.Managers
             Destroy(audioSource);
         }
 
-        private IEnumerator FadeBGMCO(float endValue, float totalTime = 1f)
+        private IEnumerator FadeMixerGroupVolume(MixerGroup mixerGroup, float endValue, float totalTime = 1f)
         {
-            
-            AudioMixer.GetFloat("BGM", out float start);
+            string mixerGroupText = mixerGroup.ToString();
+            AudioMixer.GetFloat(mixerGroupText, out float start);
             float end = endValue;
             float lerpTime = 0f;
 
             while (lerpTime < totalTime)
             {
                 lerpTime += Time.deltaTime;
-                AudioMixer.SetFloat("BGM", Mathf.Lerp(start, end, lerpTime / totalTime));
+                AudioMixer.SetFloat(mixerGroupText, Mathf.Lerp(start, end, lerpTime / totalTime));
                 yield return null;
             }
 
-            AudioMixer.SetFloat("BGM", end);
+            AudioMixer.SetFloat(mixerGroupText, end);
         }
 
         private IEnumerator LerpVolume(AudioSource audioSource, float finalVolume, float totalTime = 1f)

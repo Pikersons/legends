@@ -44,9 +44,12 @@ namespace Legends.Managers
             FadeController.FadeInInstant();
             FadeController.FadeOut(1f);
 
-            AudioManager.MuteBGM();
+            AudioManager.Mute(AudioManager.MixerGroup.BGM);
             AudioManager.StartBGM();
-            AudioManager.FadeOutBGM(2f);
+            AudioManager.FadeIn(AudioManager.MixerGroup.BGM, 3f);
+
+            AudioManager.Mute(AudioManager.MixerGroup.Environment);
+            AudioManager.FadeIn(AudioManager.MixerGroup.Environment, 4f);
         }
 
         public void TransitionToCharacterSelection()
@@ -57,14 +60,14 @@ namespace Legends.Managers
         private void StartTransition()
         {
             GameState = GameState.Transitioning;
-            AudioManager.FadeInBGM(2f);
-            FadeController.FadeIn(0.57f);
+            AudioManager.FadeIn(AudioManager.MixerGroup.BGM, 2f);
+            FadeController.FadeOut(0.57f);
         }
 
         private void EndTransition()
         {
-            AudioManager.FadeOutBGM(2f);
-            FadeController.FadeOut(0.57f);
+            AudioManager.FadeOut(AudioManager.MixerGroup.BGM, 2f);
+            FadeController.FadeIn(0.57f);
         }
 
     }
