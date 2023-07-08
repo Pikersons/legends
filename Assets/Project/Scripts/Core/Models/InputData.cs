@@ -13,23 +13,23 @@ namespace Legends.Core.Models
     {
         private readonly NetworkButtons _buttons;
 
+        public readonly NetworkId HoverNetworkId { get; }
         public readonly NetworkId SelectedNetworkId { get; }
         public readonly NetworkId TargetNetworkId { get; }
-        public readonly Vector3 PointerScreenPosition { get; }
         public readonly Vector3 PointerWorldPosition { get; }
         public readonly bool IsPrimaryButtonDown => _buttons.IsSet(InputButton.PrimaryButton);
         public readonly bool IsSecondaryButtonDown => _buttons.IsSet(InputButton.SecondaryButton);
 
-        public InputData(NetworkId selectedNetworkId,
+        public InputData(NetworkId hoverNetworkId,
+                         NetworkId selectedNetworkId,
                          NetworkId targetNetworkId,
-                         Vector3 pointerScreenPosition,
                          Vector3 pointerWorldPosition,
                          bool isPrimaryButtonDown,
                          bool isSecondaryButtonDown)
         {
+            HoverNetworkId = hoverNetworkId;
             SelectedNetworkId = selectedNetworkId;
             TargetNetworkId = targetNetworkId;
-            PointerScreenPosition = pointerScreenPosition;
             PointerWorldPosition = pointerWorldPosition;
             _buttons = new NetworkButtons();
             _buttons.Set(InputButton.PrimaryButton, isPrimaryButtonDown);

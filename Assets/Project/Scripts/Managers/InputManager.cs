@@ -6,13 +6,23 @@ namespace Legends.Managers
 {
     public class InputManager : MonoBehaviour
     {
+        private NetworkId _hoverNetworkId;
         private NetworkId _selectedNetworkId;
         private NetworkId _targetNetworkId;
-        private Vector3 _pointerScreenPosition;
         private Vector3 _pointerWorldPosition;
         private bool _isInputChanged;
         private bool _isPrimaryButtonDown;
         private bool _isSecondaryButtonDown;
+
+        public NetworkId HoverNetworkId
+        {
+            get => _hoverNetworkId;
+            set
+            {
+                _hoverNetworkId = value;
+                _isInputChanged = true;
+            }
+        }
 
         public NetworkId SelectedNetworkId
         {
@@ -30,16 +40,6 @@ namespace Legends.Managers
             set
             {
                 _targetNetworkId = value;
-                _isInputChanged = true;
-            }
-        }
-
-        public Vector3 PointerScreenPosition
-        {
-            get => _pointerScreenPosition;
-            set
-            {
-                _pointerScreenPosition = value;
                 _isInputChanged = true;
             }
         }
@@ -78,9 +78,9 @@ namespace Legends.Managers
         {
             if (_isInputChanged)
             {
-                InputData data = new(SelectedNetworkId,
+                InputData data = new(HoverNetworkId,
+                                     SelectedNetworkId,
                                      TargetNetworkId,
-                                     PointerScreenPosition,
                                      PointerWorldPosition,
                                      IsPrimaryButtonDown,
                                      IsSecondaryButtonDown);
@@ -96,27 +96,27 @@ namespace Legends.Managers
             bool isSecondaryButtonDown = Input.GetMouseButton((int)InputButton.SecondaryButton);
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
-                if (PointerWorldPosition != hit.point)
+                NetworkObject networkObject = hit.transform.gameObject.GetComponentInParent<NetworkObject>();
+                NetworkId networkId = networkObject == null ? default : networkObject.Id;
+                if (!IsPrimaryButtonDown && isPrimaryButtonDown)
                 {
-                    PointerWorldPosition = hit.point;
+                    SelectedNetworkId = networkId;
                 }
-                if ((!IsPrimaryButtonDown && isPrimaryButtonDown) ||
-                    (!IsSecondaryButtonDown && isSecondaryButtonDown))
-                {
-                    NetworkObject networkObject = hit.transform.gameObject.GetComponentInParent<NetworkObject>();
-                    NetworkId networkId = networkObject == null ? default : networkObject.Id;
-                    if (isPrimaryButtonDown)
-                    {
-                        SelectedNetworkId = networkId;
-                    }
-                    if (isSecondaryButtonDown)
-                    {
-                        TargetNetworkId = networkId;
-                    }
-                }
-                else if (IsSecondaryButtonDown && !isSecondaryButtonDown)
+                if (IsSecondaryButtonDown && !isSecondaryButtonDown)
                 {
                     TargetNetworkId = default;
+                }
+                else if (!IsSecondaryButtonDown && isSecondaryButtonDown)
+                {
+                    TargetNetworkId = networkId;
+                }
+                if (HoverNetworkId != networkId)
+                {
+                    HoverNetworkId = networkId;
+                }
+                if (isSecondaryButtonDown && PointerWorldPosition != hit.point)
+                {
+                    PointerWorldPosition = hit.point;
                 }
             }
             if (IsPrimaryButtonDown != isPrimaryButtonDown)
@@ -127,9 +127,9 @@ namespace Legends.Managers
             {
                 IsSecondaryButtonDown = isSecondaryButtonDown;
             }
-            if (PointerScreenPosition != Input.mousePosition)
+            if (SelectedNetworkId.IsValid && Input.GetKeyDown(KeyCode.Escape))
             {
-                PointerScreenPosition = Input.mousePosition;
+                SelectedNetworkId = default;
             }
         }
         #endregion

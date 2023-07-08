@@ -8,59 +8,54 @@ namespace Legends.Controllers
 {
     public class PlayerProjectileController : NetworkBehaviour
     {
-        [SerializeField]
-        private NetworkPrefabRef _bulletPrefab;
-
-        [SerializeField]
-        private Transform _firePosition;
-
-        [SerializeField]
-        private float _bulletSpeed;
-
-        [SerializeField]
-        private float _bulletCooldown;
-
-        private float _lastBulletTime;
-
-        private PlayerRef _targetPlayerRef;
+        [SerializeField] private Transform _firePosition;
+        [SerializeField] private NetworkPrefabRef _bulletPrefab;
+        [SerializeField] private float _bulletSpeed;
+        [SerializeField] private float _bulletCooldown;
 
         private Dictionary<NetworkId, ProjectileData> _projectileDict;
+        private PlayerRef _targetPlayerRef;
+        private float _lastBulletTime;
 
-        private void Awake()
-        {
-            _projectileDict = new Dictionary<NetworkId, ProjectileData>();
-        }
-
-        public void SetTarget(PlayerRef targetPlayerRef)
-        {
-            _targetPlayerRef = targetPlayerRef;
-        }
-
-        public void FixedUpdateNetwork()
+        public override void FixedUpdateNetwork()
         {
             if (!Runner.IsServer)
             {
                 return;
             }
-
-            if (_targetPlayerRef != PlayerRef.None
-                && _lastBulletTime + _bulletCooldown < Runner.SimulationTime)
+            if (GetInput(out InputData inputData))
+            {
+                Runner.TryFindObject(inputData.TargetNetworkId, out NetworkObject targetNetworkObject);
+                _targetPlayerRef = targetNetworkObject.InputAuthority;
+            }
+            if (_targetPlayerRef != PlayerRef.None &&
+                _lastBulletTime + _bulletCooldown < Runner.SimulationTime)
             {
                 SpawnProjectile();
             }
-
             foreach (KeyValuePair<NetworkId, ProjectileData> projectileDataKvp in _projectileDict)
             {
                 ProjectileData projectileData = projectileDataKvp.Value;
-                PlayerController targetController =
-                    GameManager.Instance.GetPlayerController(projectileData.TargetPlayerRef);
-
+                PlayerController targetController = GameManager.Instance.GetPlayerController(projectileData.TargetPlayerRef);
                 Vector3 bulletPosition = projectileData.Object.transform.position;
-                projectileData.Object.transform.position = Vector3.MoveTowards(
-                    bulletPosition,
-                    targetController.transform.position,
-                    _bulletSpeed * Runner.DeltaTime);
+                projectileData.Object.transform.position = Vector3
+                    .MoveTowards(bulletPosition,
+                                 targetController.transform.position,
+                                 _bulletSpeed * Runner.DeltaTime);
             }
+        }
+
+        #region Unity
+        private void Awake()
+        {
+            _projectileDict = new Dictionary<NetworkId, ProjectileData>();
+        }
+        #endregion
+
+        private void BulletController_Collided(NetworkObject bulletObject)
+        {
+            _projectileDict.Remove(bulletObject.Id);
+            Runner.Despawn(bulletObject);
         }
 
         private void SpawnProjectile()
@@ -70,12 +65,6 @@ namespace Legends.Controllers
             bulletController.Collided += BulletController_Collided;
             _projectileDict.Add(projectileObject.Id, new ProjectileData(projectileObject, _targetPlayerRef));
             _lastBulletTime = Runner.SimulationTime;
-        }
-
-        private void BulletController_Collided(NetworkObject bulletObject)
-        {
-            _projectileDict.Remove(bulletObject.Id);
-            Runner.Despawn(bulletObject);
         }
     }
 }

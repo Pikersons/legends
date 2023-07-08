@@ -15,7 +15,7 @@ namespace Legends.Controllers
         {
             if (GetInput(out InputData inputData))
             {
-                //Debug.Log($"Player - {inputData.IsPrimaryButtonDown} - {inputData.IsSecondaryButtonDown} - {inputData.PointerScreenPosition} - {inputData.PointerWorldPosition} - {inputData.SelectedNetworkId} - {inputData.TargetNetworkId}");
+                Debug.Log($"Player - {inputData.IsPrimaryButtonDown} - {inputData.IsSecondaryButtonDown} - {inputData.PointerWorldPosition} - {inputData.HoverNetworkId} - {inputData.SelectedNetworkId} - {inputData.TargetNetworkId}");
             }
         }
 
