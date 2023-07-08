@@ -8,33 +8,44 @@ namespace Legends.UI
     [RequireComponent(typeof(AudioSource))]
     public abstract class Menu : MonoBehaviour
     {
-        [field: SerializeField] public AudioClip ShowSound { get; set; }
-        [field: SerializeField] public AudioClip HideSound { get; set; }
-        [field: SerializeField] public Vector2 ShowPosition { get; set; }
-        [field: SerializeField] public Vector2 HidePosition { get; set; }
-
-        #region Settings and Dependencies
-        [field: Foldout("Menu Settings")]
+        #region Menu
+        [field: Foldout("Menu")]
         [field: SerializeField]
-        [field: ReadOnly]
-        public MenuSettings MenuSettings { get; set; }
+        public AudioClip ShowSound { get; set; }
 
-        [field: Foldout("Menu Settings")]
+        [field: Foldout("Menu")]
         [field: SerializeField]
-        [field: ReadOnly]
-        protected RectTransform RectTransform { private get; set; }
+        public AudioClip HideSound { get; set; }
 
-        [field: Foldout("Menu Settings")]
+        [field: Foldout("Menu")]
+        [field: SerializeField]
+        public Vector2 ShowPosition { get; set; }
+
+        [field: Foldout("Menu")]
+        [field: SerializeField]
+        public Vector2 HidePosition { get; set; }
+
+        [field: Foldout("Menu")]
         [field: SerializeField]
         [field: ReadOnly]
         public AudioSource AudioSource { get; set; }
 
-        [field: Foldout("Menu Settings")]
+        [field: Foldout("Menu")]
         [field: SerializeField]
         [field: ReadOnly]
         public bool IsVisible { get; set; }
 
-        [Button("Setup")]
+        [field: Foldout("Menu")]
+        [field: SerializeField]
+        [field: ReadOnly]
+        public MenuSettings MenuSettings { get; set; }
+
+        [field: Foldout("Menu")]
+        [field: SerializeField]
+        [field: ReadOnly]
+        protected RectTransform RectTransform { private get; set; }
+
+        [Button("Setup Menu")]
         public void GetDependencies()
         {
             MenuSettings = Resources.Load("MenuSettings") as MenuSettings;
@@ -44,7 +55,7 @@ namespace Legends.UI
         #endregion
 
         public virtual void Awake()
-        {
+        { 
             GetDependencies();
             IsVisible = false;
         }
