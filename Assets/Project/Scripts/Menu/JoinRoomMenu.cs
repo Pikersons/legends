@@ -3,14 +3,8 @@ using NaughtyAttributes;
 
 namespace Legends.UI
 {
-    public class CreateRoomMenu : Menu
+    public class JoinRoomMenu : Menu
     {
-        public override void Awake()
-        {
-            base.Awake();
-            Show();
-        }
-
         [Button("Show")]
         public override void Show()
         {
