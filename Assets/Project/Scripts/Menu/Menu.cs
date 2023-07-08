@@ -70,7 +70,7 @@ namespace Legends.UI
 
             IsVisible = true;
             AudioSource.clip = ShowSound;
-            AudioSource.pitch = MenuSettings.showSoundPitch;
+            //AudioSource.pitch = MenuSettings.showSoundPitch;
             AudioSource.Play();
             RectTransform
                 .DOAnchorPos(ShowPosition, 1f, false)
@@ -83,9 +83,9 @@ namespace Legends.UI
             if (!IsVisible) return;
 
             IsVisible = false;
-            AudioSource.clip = HideSound;
-            AudioSource.pitch = MenuSettings.hideSoundPitch;
-            AudioSource.Play();
+            //AudioSource.clip = HideSound;
+            //AudioSource.pitch = MenuSettings.hideSoundPitch;
+            //AudioSource.Play();
             RectTransform
                 .DOAnchorPos(HidePosition, 1f, false)
                 .SetEase(MenuSettings.easeType)

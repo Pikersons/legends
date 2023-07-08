@@ -60,14 +60,14 @@ namespace Legends.Managers
         private void StartTransition()
         {
             GameState = GameState.Transitioning;
-            AudioManager.FadeIn(AudioManager.MixerGroup.BGM, 2f);
-            FadeController.FadeOut(0.57f);
+            AudioManager.FadeOut(AudioManager.MixerGroup.BGM, 2f);
+            FadeController.FadeIn(0.57f);
         }
 
         private void EndTransition()
         {
-            AudioManager.FadeOut(AudioManager.MixerGroup.BGM, 2f);
-            FadeController.FadeIn(0.57f);
+            AudioManager.FadeIn(AudioManager.MixerGroup.BGM, 2f);
+            FadeController.FadeOut(0.57f);
         }
 
     }

@@ -4224,7 +4224,8 @@ AudioSource:
   m_GameObject: {fileID: 727199811}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8923955614380441862, guid: 4b1de0a6ba50043eebdad063096d5f67,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 50011f198fa984164b30d2ebbe6400e6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -4679,19 +4680,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 841264340}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 727199816}
-        m_TargetAssemblyTypeName: Legends.UI.CreateRoomMenu, Assembly-CSharp
-        m_MethodName: OnClickJoinRoom
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &841264340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10014,11 +10003,12 @@ AudioSource:
   m_GameObject: {fileID: 2117262653}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8923955614380441862, guid: 4b1de0a6ba50043eebdad063096d5f67,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 47ec846e24a3b428bbcb9b189d85b114, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.7
   Loop: 0
   Mute: 0
   Spatialize: 0

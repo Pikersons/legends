@@ -75,7 +75,7 @@ namespace Legends.Managers
 
         public void FadeOut(MixerGroup mixerGroup, float totalTime = 1f)
         {
-            StartCoroutine(FadeMixerGroupVolume(mixerGroup, 80f, totalTime));
+            StartCoroutine(FadeMixerGroupVolume(mixerGroup, -80f, totalTime));
         }
 
         public void FadeIn(MixerGroup mixerGroup, float totalTime = 1f)
