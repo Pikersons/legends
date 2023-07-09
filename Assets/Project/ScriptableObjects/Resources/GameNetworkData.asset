@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 382d742c5fc474cd48626658d16956a0, type: 3}
-  m_Name: MenuSettings
+  m_Script: {fileID: 11500000, guid: dd3c49b85a12546c28163df4986bcbca, type: 3}
+  m_Name: GameNetworkData
   m_EditorClassIdentifier: 
-  easeType: 27
+  gameMode: 0
+  roomName: 

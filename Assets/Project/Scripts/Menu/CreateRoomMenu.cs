@@ -2,27 +2,29 @@ using UnityEngine;
 using NaughtyAttributes;
 using Legends.Controllers;
 using Legends.Managers;
+using UnityEngine.Events;
+using Legends.ScriptableObjects;
 
 namespace Legends.UI
 {
     public class CreateRoomMenu : Menu
     {
         #region Dependencies and Setup
-        [field: Foldout("Create Room")]
+
         [field: SerializeField]
         public GameFlowManager GameFlowManager { get; set; }
 
-        [field: Foldout("Create Room")]
         [field: SerializeField]
         public FadeController FadeController { get; set; }
 
-        [field: Foldout("Create Room")]
         [field: SerializeField]
         public AudioManager AudioManager { get; set; }
 
-        [field: Foldout("Create Room")]
         [field: SerializeField]
         public AudioClip CreateRoomClickSound { get; set; }
+
+        [field: SerializeField]
+        public GameNetworkData GameNetworkData { get; set; }
 
         [Button("Setup Menu CreateRoom")]
         public new void GetDependencies()
@@ -30,6 +32,7 @@ namespace Legends.UI
             GameFlowManager = FindObjectOfType<GameFlowManager>();
             FadeController = FindObjectOfType<FadeController>();
             AudioManager = FindObjectOfType<AudioManager>();
+            GameNetworkData = Resources.Load<GameNetworkData>("GameNetworkData");
         }
 
         public override void Awake()
@@ -37,6 +40,7 @@ namespace Legends.UI
             base.Awake();
             GetDependencies();
         }
+
         #endregion
 
         private void Start()
@@ -47,10 +51,17 @@ namespace Legends.UI
         public void OnClickCreateRoom()
         {
             AudioManager.PlaySFX(CreateRoomClickSound);
+            GameNetworkData.gameMode = Fusion.GameMode.Host;
             GameFlowManager.TransitionToCharacterSelection();
         }
 
+        public void Input_OnValueChanged(string roomName)
+        {
+            GameNetworkData.roomName = roomName;
+        }
+
         #region Auxiliar Methods
+
         [Button("Show")]
         public override void Show()
         {
@@ -62,6 +73,7 @@ namespace Legends.UI
         {
             base.Hide();
         }
+
         #endregion
     }
 }

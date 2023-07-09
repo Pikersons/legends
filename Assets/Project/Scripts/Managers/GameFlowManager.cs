@@ -25,11 +25,15 @@ namespace Legends.Managers
         [field: SerializeField]
         public AudioManager AudioManager { get; set; }
 
+        [field: SerializeField]
+        public NetworkManager NetworkManager { get; set; }
+
         [Button("Setup Game Flow")]
         public void GetDependencies()
         {
             FadeController = FindObjectOfType<FadeController>();
             AudioManager = FindObjectOfType<AudioManager>();
+            NetworkManager = FindObjectOfType<NetworkManager>();
         }
 
         private void Awake()
@@ -55,18 +59,21 @@ namespace Legends.Managers
         public void TransitionToCharacterSelection()
         {
             StartTransition();
+            NetworkManager.StartGame();
         }
 
         private void StartTransition()
         {
             GameState = GameState.Transitioning;
             AudioManager.FadeOut(AudioManager.MixerGroup.BGM, 2f);
+            //AudioManager.FadeOut(AudioManager.MixerGroup.Environment, 2f);
             FadeController.FadeIn(0.57f);
         }
 
         private void EndTransition()
         {
             AudioManager.FadeIn(AudioManager.MixerGroup.BGM, 2f);
+            //AudioManager.FadeIn(AudioManager.MixerGroup.Environment, 2f);
             FadeController.FadeOut(0.57f);
         }
 

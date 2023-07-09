@@ -83,16 +83,6 @@ namespace Legends.Managers
             StartCoroutine(FadeMixerGroupVolume(mixerGroup, 0f, totalTime));
         }
 
-        public void FadeInEnvironment(float totalTime = 1f)
-        {
-            StartCoroutine(FadeMixerGroupVolume(MixerGroup.Environment, -80f, totalTime));
-        }
-
-        public void FadeOutEnvironment(float totalTime = 1f)
-        {
-            StartCoroutine(FadeMixerGroupVolume(MixerGroup.Environment, 0f, totalTime));
-        }
-
         #region Auxiliar Methods
         private IEnumerator PlayDelayedCO(AudioSource audioSource, float delay)
         {

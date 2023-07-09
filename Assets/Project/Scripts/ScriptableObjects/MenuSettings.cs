@@ -7,9 +7,5 @@ namespace Legends.ScriptableObjects
     public class MenuSettings : ScriptableObject
     {
         public Ease easeType;
-        public float showSoundPitch;
-        public float hideSoundPitch;
-        public float fadeInTime;
-        public float fadeOutTime;
     }
 }
